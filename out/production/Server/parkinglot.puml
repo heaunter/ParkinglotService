@@ -1,0 +1,99 @@
+@startuml
+
+title 自助式停车场解决方案
+scale 1500 width
+
+GetSocket <--. ARMClient
+ARMClient <--. Myserver
+AnalysisMsg <--* ARMClient : 组合关系
+AnalysisMsg <--* MyServerHandler : 组合关系
+MyServerHandler <--* Myserver : 聚合关系
+
+JdbcUtils <--* DBserver
+DBserver <--. AnalysisMsg
+
+Constant <--. MyServerHandler
+Constant <--. AnalysisMsg
+
+
+class Myserver{
++Main()
++init()
+}
+class MyServerHandler{
++exceptionCaught()
++messageReceived()
++messageSent()
++sessionClosed()
++sessionCreated()
++sessionIdle()
++sessionOpened()
+}
+
+class DBserver{
++add()
++delete()
++find()
++getAll()
++update()
+}
+class JdbcUtils{
++commit():void
++getConnection():Connection
++getDataSource():DataSource
++release():void
++rollback():void
++startTransaction():void
+}
+
+class ARMClient{
++sendMsg():String
++revMsg()
+}
+class GetSocket{
++IsSOCNull():Socket
+}
+class AnalysisMsg{
++dowork():String
++doworkForPhone():String
+}
+
+class Constant{
+程序中用到的所有常量
+}
+
+class User{
+ - uid
+ - uname
+ - password
+ - email
+ - phone
+ - balance
+ - userflag
+}
+
+
+class Card{
+ - cid
+ - cname
+ - ccount
+}
+
+class Account{
+ - aid
+ - aname
+ - astatus
+}
+
+
+note top of Account : 手机账号信息类
+note right of Card : 卡信息类
+note top of User : 用户信息类
+
+note bottom of GetSocket : 得到ARM服务端的连接
+note bottom of ARMClient : 负责发送数据至ARM服务器，和接受来自ARM服务器的消息。
+
+
+skinparam classAttributeIconSize 0
+
+@enduml

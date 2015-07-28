@@ -1,0 +1,42 @@
+@startuml
+
+title 自助式停车场解决方案
+scale 1500 width
+
+Service <--.> LoginActivity
+Service <--.> RegisterActivity
+Service <--.> ResetPasswdActivity
+Service <--.> PayActivity
+Service <--.> MainActivity
+
+Helper<--.> Service
+
+class Service{
++ init()
++ SendMsg()
++ RevMsg()
+}
+class Helper{
++ 协同Service处理消息
+}
+class LoginActivity{
++ 登录界面
+}
+
+class RegisterActivity{
++ 注册界面
+}
+
+class ResetPasswdActivity{
++ 修改密码界面
+}
+
+class PayActivity{
++ 支付充值界面
+}
+class MainActivity{
++ 设备控制界面
+}
+
+
+@enduml
